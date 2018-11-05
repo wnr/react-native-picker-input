@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/wnr/react-native-picker-input/issues"
   },
-  "homepage": "https://github.com/wnr/react-native-picker-input#readme"
+  "homepage": "https://github.com/wnr/react-native-picker-input#readme",
+  "peerDependencies": {
+    "react-native": "^0.41.2"
+  }
 }

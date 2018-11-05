@@ -4,7 +4,7 @@
 // Building upon https://github.com/DickyT/react-native-textinput-utils, the main idea is to:
 //
 // 1. Expose a picker-input buildingblock that renders a normal React Native TextInput buildingblock, passing along the props.
-// 2. When the TextInput buildingblock is mounted, invoke a native singleton object "EVRYPickerInput" that:
+// 2. When the TextInput buildingblock is mounted, invoke a native singleton object "WNRPickerInputHandler" that:
 // 2.a. Converts the given React TextInput reference to a UITextField pointer.
 // 2.b. Creates a UIPickerView and feeds it with the data given in :picker-items props.
 // 2.c. Register the UIPickerView to the .inputView property of the native UITextField screen.
@@ -16,7 +16,7 @@
 import React, {Component} from 'react';
 import ReactNative, {TextInput, NativeModules, NativeEventEmitter} from 'react-native';
 
-var pickerInputHandler = NativeModules.EVRYPickerInputHandler; // WNRPickerInputHandler
+var pickerInputHandler = NativeModules.WNRPickerInputHandler;
 var pickerInputHandlerEventEmitter = new NativeEventEmitter(pickerInputHandler);
 
 var counter = 1;
@@ -81,14 +81,14 @@ export default class PickerInputIos extends Component {
             id: thisComponent._id,
             selectedIndex: getSelectedIndex(props)
         });
-        // "WNRPickerInputDidSelected"
-        this._didSelectedSubscription = pickerInputHandlerEventEmitter.addListener('EVRYKeyboardPickerViewDidSelected', function (data) {
+        this._didSelectedSubscription = pickerInputHandlerEventEmitter.addListener('WNRKeyboardPickerViewDidSelected', function (data) {
+            props = thisComponent.props;
             if (props.onChange) {
                 if (data.id === thisComponent._id) {
                     props.onChange(props.options[data.selectedIndex].value);
                 }
             }
-        })
+        });
     }
 
     componentWillReceiveProps(newProps) {
