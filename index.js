@@ -1,5 +1,6 @@
-import React from 'react';
-import ReactNative, {TextInput, NativeModules, NativeEventEmitter} from 'react-native';
 import PickerInputIos from './picker-input-ios';
+import PickerInput from './picker-input';
 
-export PickerInputIos;
+export {PickerInputIos};
+
+export default PickerInput;

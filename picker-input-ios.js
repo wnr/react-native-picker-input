@@ -17,13 +17,13 @@ import React, {Component} from 'react';
 import ReactNative, {TextInput, NativeModules, NativeEventEmitter} from 'react-native';
 
 var pickerInputHandler = NativeModules.EVRYPickerInputHandler; // WNRPickerInputHandler
-var pickerInputHandlerEventEmitter new NativeEventEmitter(pickerInputHandler);
+var pickerInputHandlerEventEmitter = new NativeEventEmitter(pickerInputHandler);
 
 var counter = 1;
 
 function isPropsEqual(props1, props2) {
-    var items1 = props1.pickerItems;
-    var items2 = props2.pickerItems;
+    var items1 = props1.options;
+    var items2 = props2.options;
     var value1 = props1.value;
     var value2 = props2.value;
 
@@ -51,13 +51,13 @@ function isPropsEqual(props1, props2) {
 }
 
 function getSelectedIndex(props) {
-    var index = props.pickerItems.map((p) => p.value).indexOf(props.value);
+    var index = props.options.map((p) => p.value).indexOf(props.value);
     return index === -1 ? 0 : index;
 }
 
 function getSelectedLabel(props) {
-    for (var i = 0; i < props.pickerItems.length;) {
-        var item = props.pickerItems[i];
+    for (var i = 0; i < props.options.length; i++) {
+        var item = props.options[i];
         if (item.value === props.value) {
             return item.label;
         }
@@ -65,18 +65,19 @@ function getSelectedLabel(props) {
     return null;
 }
 
-export default class PdfView extends Component {
+export default class PickerInputIos extends Component {
     constructor(props) {
         super(props);
 
         this._id = counter++;
     }
 
-    componentDidMount(props) {
+    componentDidMount() {
         var thisComponent = this;
+        var props = thisComponent.props;
         var nodeHandle = ReactNative.findNodeHandle(this.refs.input);
         pickerInputHandler.componentDidMount(nodeHandle, {
-            pickerOptions: props.pickerOptions,
+            pickerOptions: props.options,
             id: thisComponent._id,
             selectedIndex: getSelectedIndex(props)
         });
@@ -84,7 +85,7 @@ export default class PdfView extends Component {
         this._didSelectedSubscription = pickerInputHandlerEventEmitter.addListener('EVRYKeyboardPickerViewDidSelected', function (data) {
             if (props.onChange) {
                 if (data.id === thisComponent._id) {
-                    props.onChange(props.pickerItems[data.selectedIndex]);
+                    props.onChange(props.options[data.selectedIndex].value);
                 }
             }
         })
@@ -94,14 +95,15 @@ export default class PdfView extends Component {
         var currentProps = this.props;
         if (!isPropsEqual(currentProps, newProps)) {
             pickerInputHandler.componentWillReceiveProps(ReactNative.findNodeHandle(this.refs.input), {
-                pickerOptions: newProps.pickerOptions,
+                pickerOptions: newProps.options,
                 selectedIndex: getSelectedIndex(newProps)
             });
         }
     }
 
-    render(props) {
-        return <TextInput {...props} ref="input" value={getSelectedLabel(props)} />;
+    render() {
+        var props = this.props;
+        return <TextInput {...props} ref="input" value={getSelectedLabel(props)}/>;
     }
 
     componentWillUnmount() {
