@@ -91,9 +91,9 @@ export default class PickerInputIos extends Component {
         });
     }
 
-    componentWillReceiveProps(newProps) {
-        var currentProps = this.props;
-        if (!isPropsEqual(currentProps, newProps)) {
+    componentDidUpdate(prevProps) {
+        var newProps = this.props;
+        if (!isPropsEqual(prevProps, newProps)) {
             pickerInputHandler.componentWillReceiveProps(ReactNative.findNodeHandle(this.refs.input), {
                 pickerOptions: newProps.options,
                 selectedIndex: getSelectedIndex(newProps)
