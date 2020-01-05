@@ -16,7 +16,7 @@
 import React, {Component} from 'react';
 import ReactNative, {TextInput, NativeModules, NativeEventEmitter} from 'react-native';
 
-var pickerInputHandler = NativeModules.WNRPickerInputHandler;
+var pickerInputHandler = NativeModules.WNRPickerInput;
 var pickerInputHandlerEventEmitter = new NativeEventEmitter(pickerInputHandler);
 
 var counter = 1;
