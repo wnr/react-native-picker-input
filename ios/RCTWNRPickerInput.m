@@ -111,7 +111,7 @@ RCT_EXPORT_METHOD(componentDidMount:(nonnull NSNumber*)reactNode options:(NSDict
     }];
 }
 
-RCT_EXPORT_METHOD(componentWillReceiveProps:(nonnull NSNumber*)reactNode options:(NSDictionary *)options) {
+RCT_EXPORT_METHOD(componentDidUpdate:(nonnull NSNumber*)reactNode options:(NSDictionary *)options) {
     [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry ) {
         UIView *view = viewRegistry[reactNode];
         if (!view) {
