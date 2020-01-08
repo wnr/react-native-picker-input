@@ -16,7 +16,7 @@
 import React, {Component} from 'react';
 import ReactNative, {TextInput, NativeModules, NativeEventEmitter} from 'react-native';
 
-var pickerInputHandler = NativeModules.WNRPickerInputHandler;
+var pickerInputHandler = NativeModules.WNRPickerInput;
 var pickerInputHandlerEventEmitter = new NativeEventEmitter(pickerInputHandler);
 
 var counter = 1;
@@ -91,10 +91,10 @@ export default class PickerInputIos extends Component {
         });
     }
 
-    componentWillReceiveProps(newProps) {
-        var currentProps = this.props;
-        if (!isPropsEqual(currentProps, newProps)) {
-            pickerInputHandler.componentWillReceiveProps(ReactNative.findNodeHandle(this.refs.input), {
+    componentDidUpdate(prevProps) {
+        var newProps = this.props;
+        if (!isPropsEqual(prevProps, newProps)) {
+            pickerInputHandler.componentDidUpdate(ReactNative.findNodeHandle(this.refs.input), {
                 pickerOptions: newProps.options,
                 selectedIndex: getSelectedIndex(newProps)
             });

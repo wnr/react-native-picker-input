@@ -13,7 +13,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WNRPickerInput : RCTEventEmitter <RCTBridgeModule>
+@interface RCTWNRPickerInput : RCTEventEmitter <RCTBridgeModule>
 @end
 
 #endif

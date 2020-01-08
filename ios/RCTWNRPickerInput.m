@@ -5,7 +5,7 @@
 //
 // Based on: https://github.com/DickyT/react-native-textinput-utils/tree/master/RCTTextInputUtils
 
-#import "WNRPickerInput.h"
+#import "RCTWNRPickerInput.h"
 #import "React/RCTLog.h"
 #import <React/RCTUIManager.h>
 #import <RCTText/RCTBaseTextInputView.h>
@@ -75,13 +75,13 @@
 
 #pragma mark -
 
-@implementation WNRPickerInput
+@implementation RCTWNRPickerInput
 
 - (dispatch_queue_t)methodQueue {
     return [self.bridge.uiManager methodQueue];
 }
 
-RCT_EXPORT_MODULE(WNRPickerInputHandler);
+RCT_EXPORT_MODULE();
 
 - (NSArray<NSString *> *)supportedEvents
 {
@@ -111,7 +111,7 @@ RCT_EXPORT_METHOD(componentDidMount:(nonnull NSNumber*)reactNode options:(NSDict
     }];
 }
 
-RCT_EXPORT_METHOD(componentWillReceiveProps:(nonnull NSNumber*)reactNode options:(NSDictionary *)options) {
+RCT_EXPORT_METHOD(componentDidUpdate:(nonnull NSNumber*)reactNode options:(NSDictionary *)options) {
     [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry ) {
         UIView *view = viewRegistry[reactNode];
         if (!view) {
